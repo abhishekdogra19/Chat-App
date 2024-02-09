@@ -3,7 +3,8 @@ import { Route, Routes } from "react-router-dom";
 import HomePage from "./Pages/HomePage";
 import ChatPage from "./Pages/ChatPage";
 import { Toaster } from "./components/ui/toaster";
-
+import axios from "axios";
+axios.defaults.withCredentials = true;
 const App: React.FC = () => {
   return (
     <div>

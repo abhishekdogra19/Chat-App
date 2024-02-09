@@ -9,11 +9,18 @@ const connectDB = require("./db/connect");
 //routes
 const userRouter = require("./routes/User");
 const chatRouter = require("./routes/Chat");
+const cookieParser = require("cookie-parser");
 //env
 const PORT = process.env.PORT || 6000;
 
-app.use(cors());
+app.use(
+  cors({
+    credentials: true,
+    origin: "http://localhost:5173",
+  })
+);
 app.use(express.json());
+app.use(cookieParser());
 app.get("/", (req, res) => {
   res.send("Jai Ganesh Ji");
 });

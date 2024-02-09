@@ -21,6 +21,7 @@ import { Label } from "../ui/label";
 import axios from "axios";
 import { Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useChatContext } from "@/context/chatContextUtils";
 
 const formSchema = z
   .object({
@@ -36,6 +37,7 @@ const formSchema = z
 
 const SignUpForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
+  const { setUser } = useChatContext();
   const [pic, setPic] = useState<string>();
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -110,13 +112,13 @@ const SignUpForm: React.FC = () => {
           },
         }
       );
-      localStorage.setItem("userInfo", JSON.stringify(response.data));
+      setUser(response.data);
       toast({
         title: "Success",
         description: "Please Wait...",
       });
       setTimeout(() => {
-        navigate("/chats");
+        navigate("/");
       }, 1000);
     } catch (error) {
       console.log("Error in formSubmit, ", error);

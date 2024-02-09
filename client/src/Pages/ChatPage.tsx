@@ -1,7 +1,16 @@
 import Header from "@/components/Header";
-import React from "react";
+import { useChatContext } from "@/context/chatContextUtils";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const ChatPage: React.FC = () => {
+  const { user } = useChatContext();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!user) {
+      navigate("/");
+    }
+  }, [navigate, user]);
   return (
     <div>
       <Header />

@@ -1,11 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import LoginForm from "../components/Authentication/LoginForm";
 import SignUpForm from "../components/Authentication/SignUpForm";
 import HomePageCarousel from "@/components/ui/HomePageCarousel";
 import Header from "@/components/Header";
+import { useNavigate } from "react-router-dom";
+import { useChatContext } from "../context/chatContextUtils";
 const HomePage: React.FC = () => {
+  const { user } = useChatContext();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (user) {
+      navigate("/chats");
+    }
+  }, [navigate, user]);
+  console.log("User ", user);
   return (
     <div className="min-h-screen  lg:h-screen overflow-hidden lg:p-2 bg-primary-foreground p-6 ">
       <Header />

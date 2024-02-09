@@ -19,6 +19,7 @@ import { useNavigate } from "react-router-dom";
 import { useToast } from "../ui/use-toast";
 import axios, { AxiosError } from "axios";
 import { Loader2 } from "lucide-react";
+import { useChatContext } from "@/context/chatContextUtils";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -31,6 +32,7 @@ interface Error {
 }
 
 const LoginForm: React.FC = () => {
+  const { setUser } = useChatContext();
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -55,7 +57,7 @@ const LoginForm: React.FC = () => {
           },
         }
       );
-      localStorage.setItem("userInfo", JSON.stringify(response.data));
+      setUser(response.data);
       toast({
         title: "Login Successfully",
         description: "Please wait...",
