@@ -74,9 +74,14 @@ const allUsers = asyncHandler(async (req, res) => {
   });
   res.status(200).json(users);
 });
+const logoutUser = asyncHandler(async (req, res) => {
+  res.clearCookie("token");
+  res.json({ msg: "Cooke Removed" });
+});
 module.exports = {
   registerUser,
   authUser,
   allUsers,
   getUserProfile,
+  logoutUser,
 };
