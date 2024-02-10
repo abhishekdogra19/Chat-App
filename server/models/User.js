@@ -39,7 +39,7 @@ userSchema.methods.matchPassword = async function (enteredPassword) {
 };
 userSchema.methods.createJWT = function () {
   return jwt.sign(
-    { email: this.email, id: this._id, name: this.name },
+    { email: this.email, id: this._id, name: this.name, pic: this.pic },
     process.env.JWT_SECRET,
     {
       expiresIn: process.env.JWT_LIFETIME,

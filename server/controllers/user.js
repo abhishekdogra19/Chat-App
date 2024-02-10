@@ -49,7 +49,7 @@ const authUser = asyncHandler(async (req, res) => {
   });
   return res
     .status(200)
-    .json({ _id: user._id, name: user.name, email: user.email });
+    .json({ _id: user._id, name: user.name, email: user.email, pic: user.pic });
 });
 
 const getUserProfile = asyncHandler(async (req, res) => {
