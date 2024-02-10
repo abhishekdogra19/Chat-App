@@ -67,7 +67,10 @@ const SignUpForm: React.FC = () => {
       try {
         const response = await axios.post(
           "https://api.cloudinary.com/v1_1/abhicode/image/upload",
-          data
+          data,
+          {
+            withCredentials: false,
+          }
         );
         toast({
           description: "Image successfully uploaded",

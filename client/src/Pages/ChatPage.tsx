@@ -1,20 +1,25 @@
-import Header from "@/components/Header";
+import ChatBox from "@/components/ChatBox";
+import MyChats from "@/components/MyChats";
+import SideDrawer from "@/components/SideDrawer";
 import { useChatContext } from "@/context/chatContextUtils";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const ChatPage: React.FC = () => {
-  const { user } = useChatContext();
+  const { ready, user } = useChatContext();
   const navigate = useNavigate();
   useEffect(() => {
-    if (!user) {
+    if (ready && !user) {
       navigate("/");
     }
-  }, [navigate, user]);
+  }, [navigate, ready, user]);
   return (
-    <div>
-      <Header />
-      ChatPage
+    <div className="w-full">
+      {user && <SideDrawer />}
+      <div className="flex justify-between w-full h-[90vh] p-2.5">
+        {user && <MyChats />}
+        {user && <ChatBox />}
+      </div>
     </div>
   );
 };

@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
+import { BsChatSquareText } from "react-icons/bs";
 import LoginForm from "../components/Authentication/LoginForm";
 import SignUpForm from "../components/Authentication/SignUpForm";
 import HomePageCarousel from "@/components/ui/HomePageCarousel";
-import Header from "@/components/Header";
 import { useNavigate } from "react-router-dom";
 import { useChatContext } from "../context/chatContextUtils";
+import { ModeToggle } from "@/components/mode-toggle";
 const HomePage: React.FC = () => {
   const { user } = useChatContext();
   const navigate = useNavigate();
@@ -18,7 +18,17 @@ const HomePage: React.FC = () => {
   console.log("User ", user);
   return (
     <div className="min-h-screen  lg:h-screen overflow-hidden lg:p-2 bg-primary-foreground p-6 ">
-      <Header />
+      <div className="flex gap-1 items-center justify-center text-primary bg-primary-foreground py-2">
+        <div className="w-full text-center flex justify-center items-center gap-2">
+          <BsChatSquareText className="text-2xl" />
+          <span className="text-xl lg:text-3xl px-2 font-bold uppercase">
+            Spark Talk
+          </span>
+        </div>
+        <span>
+          <ModeToggle />
+        </span>
+      </div>
       <div className="lg:flex   lg:items-start justify-center lg:gap-2 ">
         <div className=" border lg:border-0 p-2 border-primary w-full ">
           <div className="h-60 sm:h-96 lg:h-full w-full overflow-hidden ">

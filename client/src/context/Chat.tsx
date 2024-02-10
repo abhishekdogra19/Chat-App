@@ -10,7 +10,6 @@ interface Userobj {
   email: string;
   name: string;
   pic: string;
-  token: string;
 }
 
 interface ChatContextValue {
@@ -31,7 +30,6 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
             "http://localhost:5000/api/user/getUserProfile"
           );
           setUser(response.data);
-          console.log(response);
         } catch (error) {
           console.log("error");
         }
@@ -40,7 +38,6 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
       fetchUser();
     }
   }, [user]);
-  console.log("USer: ", user);
   return (
     <ChatContext.Provider value={{ user, setUser, ready }}>
       {children}
