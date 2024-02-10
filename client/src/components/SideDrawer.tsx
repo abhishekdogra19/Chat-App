@@ -1,6 +1,4 @@
-import React, { useState } from "react";
-import { Button } from "./ui/button";
-import { MdPersonSearch } from "react-icons/md";
+import React from "react";
 import { BsChatSquareText } from "react-icons/bs";
 import { ModeToggle } from "./mode-toggle";
 import { FaBell } from "react-icons/fa";
@@ -14,20 +12,44 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import Modal from "./Modal";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useToast } from "./ui/use-toast";
+import SideSearchBar from "./SideSearchBar";
+interface Userobj {
+  _id: string;
+  email: string;
+  name: string;
+  pic: string;
+}
+interface SideDrawerProps {
+  user: Userobj;
+}
+const SideDrawer: React.FC<SideDrawerProps> = ({ user }) => {
+  const { setUser } = useChatContext();
+  const navigate = useNavigate();
+  const { toast } = useToast();
 
-const SideDrawer: React.FC = () => {
-  const [search, setSearch] = useState("");
-  const [searchResult, setSearchResult] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [loadingChat, setLoadingChat] = useState();
-  const { user } = useChatContext();
+  const logoutHandler = async () => {
+    try {
+      await axios.post("http://localhost:5000/api/user/logout");
+      toast({
+        title: "Logout Successfully",
+        description: "Please wait...",
+      });
+      setTimeout(() => {
+        setUser(null);
+        navigate("/");
+      }, 1500);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       <div className="bg-primary-foreground flex justify-between items-center w-full p-2">
-        <Button className="flex items-center gap-1">
-          <MdPersonSearch />
-          <span className="hidden sm:block">Search User</span>
-        </Button>
+        <SideSearchBar />
         <div className="w-full text-center flex justify-center items-center gap-2">
           <BsChatSquareText className="text-xs sm:text-2xl" />
           <span className="text-xs sm:text-xl lg:text-3xl px-2 font-bold uppercase">
@@ -48,8 +70,13 @@ const SideDrawer: React.FC = () => {
               <DropdownMenuContent>
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuItem>Logout</DropdownMenuItem>
+                <Modal user={user}>
+                  <DropdownMenuItem>Profile</DropdownMenuItem>
+                </Modal>
+                <DropdownMenuItem onClick={logoutHandler}>
+                  Logout
+                </DropdownMenuItem>
+                <Modal />
               </DropdownMenuContent>
             </DropdownMenu>
           </div>

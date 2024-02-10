@@ -15,7 +15,7 @@ const ChatPage: React.FC = () => {
   }, [navigate, ready, user]);
   return (
     <div className="w-full">
-      {user && <SideDrawer />}
+      {user && <SideDrawer user={user} />}
       <div className="flex justify-between w-full h-[90vh] p-2.5">
         {user && <MyChats />}
         {user && <ChatBox />}

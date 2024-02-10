@@ -15,9 +15,8 @@ const HomePage: React.FC = () => {
       navigate("/chats");
     }
   }, [navigate, user]);
-  console.log("User ", user);
   return (
-    <div className="min-h-screen  lg:h-screen overflow-hidden lg:p-2 bg-primary-foreground p-6 ">
+    <div className="min-h-screen   lg:p-2 bg-primary-foreground p-6 ">
       <div className="flex gap-1 items-center justify-center text-primary bg-primary-foreground py-2">
         <div className="w-full text-center flex justify-center items-center gap-2">
           <BsChatSquareText className="text-2xl" />
@@ -46,7 +45,7 @@ const HomePage: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="text-primary mt-2 lg:w-full lg:h-screen lg:mt-10">
+        <div className="text-primary mt-2 lg:w-full lg:mt-10">
           <Tabs defaultValue="account" className="w-full ">
             <TabsList className="flex justify-around  bg-primary-foreground border lg:border-0 border-primary border-t-0 -mt-1  py-2">
               <TabsTrigger
