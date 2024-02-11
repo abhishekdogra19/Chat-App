@@ -14,7 +14,7 @@ const ChatPage: React.FC = () => {
     }
   }, [navigate, ready, user]);
   return (
-    <div className="w-full">
+    <div className="w-full overflow-hidden">
       {user && <ChatPageHeader />}
       <div className="flex justify-between w-full h-[90vh] p-2.5">
         {user && <MyChats />}

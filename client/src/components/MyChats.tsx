@@ -5,6 +5,8 @@ import Cookies from "js-cookie";
 import axios, { AxiosError } from "axios";
 import { Button } from "./ui/button";
 import { PlusIcon } from "lucide-react";
+import ChatLoading from "./ChatLoading";
+import { getSender } from "./config/ChatLogic";
 
 interface Userobj {
   _id: string;
@@ -18,7 +20,6 @@ const MyChats: React.FC = () => {
     useChatContext();
   const [loggedUser, setLoggedUser] = useState<Userobj | null>();
   const { toast } = useToast();
-
   useEffect(() => {
     if (!ready) return;
     const fetchChats = async () => {
@@ -35,7 +36,6 @@ const MyChats: React.FC = () => {
           "http://localhost:5000/api/chat",
           config
         );
-        console.log("data ", data);
         setChats(data);
       } catch (err) {
         const error = err as AxiosError<Error>;
@@ -49,20 +49,44 @@ const MyChats: React.FC = () => {
     fetchChats();
   }, [ready, user, toast, setChats]);
   return (
-    <div className={` ${selectedChat ? "hidden" : "block"} sm:block`}>
-      <div>
-        <h1>My Chats</h1>
-        <Button>
+    <div
+      className={` ${
+        selectedChat ? "hidden" : "block"
+      } sm:block lg:w-1/3 w-full sm:p-4`}
+    >
+      <div className="w-full justify-between flex items-center">
+        <h1 className="font-semibold ">My Chats</h1>
+        <Button className="text-xs">
           New Group Chat <PlusIcon />
         </Button>
       </div>
-      {chats.map((chat) => (
-        <div
-          onClick={() => setSelectedChat(chat)}
-          className="cursor-pointer"
-          key={chat._id}
-        ></div>
-      ))}
+      <div className="overflow-y-hidden flex flex-col p-3 bg-primary-foreground text-primary w-full h-full rounded-lg">
+        {chats && loggedUser ? (
+          <div className="overflow-y-scroll">
+            {chats.map((chat) => (
+              <div
+                onClick={() => setSelectedChat(chat)}
+                className={`cursor-pointer mt-2 rounded-lg px-2 py-4 duration-300 ${
+                  selectedChat == chat ? " bg-blue-700 " : "bg-primary"
+                } ${
+                  selectedChat == chat
+                    ? " text-white "
+                    : "text-primary-foreground"
+                } `}
+                key={chat._id}
+              >
+                <h1 className="capitalize">
+                  {!chat.isGroupChat
+                    ? getSender(loggedUser, chat.users)
+                    : chat.chatName}
+                </h1>
+              </div>
+            ))}{" "}
+          </div>
+        ) : (
+          <ChatLoading />
+        )}
+      </div>
     </div>
   );
 };

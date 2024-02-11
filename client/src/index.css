@@ -71,7 +71,7 @@
     @apply border-border;
   }
   body {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     @apply bg-background text-foreground;
   }
 }
