@@ -13,21 +13,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Modal from "./Modal";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "./ui/use-toast";
 import SideSearchBar from "./SideSearchBar";
-interface Userobj {
-  _id: string;
-  email: string;
-  name: string;
-  pic: string;
-}
-interface SideDrawerProps {
-  user: Userobj;
-}
-const SideDrawer: React.FC<SideDrawerProps> = ({ user }) => {
-  const { setUser } = useChatContext();
+
+const ChatPageHeader: React.FC = () => {
+  const { user, setUser } = useChatContext();
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -42,8 +34,13 @@ const SideDrawer: React.FC<SideDrawerProps> = ({ user }) => {
         setUser(null);
         navigate("/");
       }, 1500);
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      const error = err as AxiosError<Error>;
+      toast({
+        title: "Error during logging out",
+        description: error.response?.data.message,
+        variant: "destructive",
+      });
     }
   };
   return (
@@ -70,13 +67,17 @@ const SideDrawer: React.FC<SideDrawerProps> = ({ user }) => {
               <DropdownMenuContent>
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <Modal user={user}>
-                  <DropdownMenuItem>Profile</DropdownMenuItem>
-                </Modal>
-                <DropdownMenuItem onClick={logoutHandler}>
+                {user && (
+                  <Modal user={user}>
+                    <DropdownMenuItem>Profile</DropdownMenuItem>
+                  </Modal>
+                )}
+                <DropdownMenuItem
+                  className="w-full bg-primary text-primary-foreground flex items-center justify-center mt-1 py-2 rounded-sm hover:brightness-90"
+                  onClick={logoutHandler}
+                >
                   Logout
                 </DropdownMenuItem>
-                <Modal />
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
@@ -87,4 +88,4 @@ const SideDrawer: React.FC<SideDrawerProps> = ({ user }) => {
   );
 };
 
-export default SideDrawer;
+export default ChatPageHeader;

@@ -3,7 +3,6 @@ import Cookies from "js-cookie";
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -12,10 +11,11 @@ import { Button } from "./ui/button";
 import { MdPersonSearch } from "react-icons/md";
 import { Input } from "./ui/input";
 import { SearchIcon } from "lucide-react";
-
 import { useToast } from "./ui/use-toast";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import ChatLoading from "./ChatLoading";
+import SearchUserList from "./SearchUserList";
+import { useChatContext } from "@/context/chatContextUtils";
 interface Userobj {
   _id: string;
   email: string;
@@ -23,12 +23,14 @@ interface Userobj {
   pic: string;
 }
 const SideSearchBar: React.FC = () => {
+  const { setSelectedChat, chats, setChats } = useChatContext();
   const { toast } = useToast();
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState<Userobj[]>([]);
   const [loading, setLoading] = useState(false);
-  // const [loadingChat, setLoadingChat] = useState();
-
+  // const [loadingChat, setLoadingChat] = useState(false);
+  const [openSidebar, setOpenSiderbar] = useState(false);
+  const [searchBtnClicked, setSearchBtnClicked] = useState(false);
   const handleSearch = async () => {
     if (!search) {
       toast({
@@ -38,6 +40,7 @@ const SideSearchBar: React.FC = () => {
     }
     try {
       setLoading(true);
+      setSearchBtnClicked(true);
       const token = Cookies.get("token");
       const config = {
         headers: {
@@ -50,16 +53,49 @@ const SideSearchBar: React.FC = () => {
       );
       setSearchResult(response.data);
       setLoading(false);
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      const error = err as AxiosError<Error>;
+      toast({
+        title: "Error during searching user",
+        description: error.response?.data.message,
+        variant: "destructive",
+      });
+    }
+  };
+  const accessChat = async (userId: string) => {
+    try {
+      const token = Cookies.get("token");
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const { data } = await axios.post(
+        "http://localhost:5000/api/chat",
+        { userId },
+        config
+      );
+      if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
+      // setLoadingChat(false);
+      setSelectedChat(data);
+      setOpenSiderbar(false);
+    } catch (err) {
+      const error = err as AxiosError<Error>;
+      toast({
+        title: "Error during logging out",
+        description: error.response?.data.message,
+        variant: "destructive",
+      });
     }
   };
   return (
-    <Sheet>
+    <Sheet open={openSidebar} onOpenChange={setOpenSiderbar}>
       <SheetTrigger className="flex items-center justify-center bg-primary text-primary-foreground px-4 py-2 rounded-xl gap-1 ">
         <MdPersonSearch />
         <span className="hidden sm:block whitespace-nowrap">Search User</span>
       </SheetTrigger>
+
       <SheetContent className="w-[300px] sm:w-[540px]" side={"left"}>
         <SheetHeader className="border-b-2 border-primary">
           <SheetTitle>Search User</SheetTitle>
@@ -68,6 +104,7 @@ const SideSearchBar: React.FC = () => {
           <Input
             className="grow grid-cols-3"
             value={search}
+            placeholder="Enter Username "
             onChange={(e) => setSearch(e.target.value)}
           />
           <Button className="flex gap-1 " onClick={handleSearch}>
@@ -76,21 +113,26 @@ const SideSearchBar: React.FC = () => {
           </Button>
         </div>
         {loading && <ChatLoading />}
-        {!loading &&
-          (searchResult.length > 0 ? (
-            searchResult.map((user) => (
-              <SheetDescription key={user._id}>
-                {/* Tomorrow will be making user list item  */}
-                {/* i will complete 11 12 */}
-                {/* Start Planing on intership project */}
-                {/* You are doing great */}
-              </SheetDescription>
-            ))
-          ) : (
-            <>
-              <p>No user has been identified with the specified username.</p>
-            </>
-          ))}
+        <div className="overflow-scroll h-screen scrollba">
+          {!loading &&
+            (searchResult.length > 0 ? (
+              searchResult.map((user) => (
+                <SearchUserList
+                  key={user._id}
+                  user={user}
+                  handleFunction={() => accessChat(user._id)}
+                />
+              ))
+            ) : (
+              <>
+                {searchBtnClicked && (
+                  <p>
+                    No user has been identified with the specified username.
+                  </p>
+                )}
+              </>
+            ))}
+        </div>
       </SheetContent>
     </Sheet>
   );

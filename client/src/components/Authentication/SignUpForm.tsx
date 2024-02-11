@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/form";
 import { PasswordInput } from "../ui/PasswordInput";
 import { Label } from "../ui/label";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useChatContext } from "@/context/chatContextUtils";
@@ -123,8 +123,13 @@ const SignUpForm: React.FC = () => {
       setTimeout(() => {
         navigate("/");
       }, 1000);
-    } catch (error) {
-      console.log("Error in formSubmit, ", error);
+    } catch (err) {
+      const error = err as AxiosError<Error>;
+      toast({
+        title: "Error during logging out",
+        description: error.response?.data.message,
+        variant: "destructive",
+      });
     }
     setLoading(false);
   }
