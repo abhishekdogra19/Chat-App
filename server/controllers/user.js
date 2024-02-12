@@ -70,7 +70,7 @@ const allUsers = asyncHandler(async (req, res) => {
       }
     : {};
   const users = await User.find(keyword).find({
-    _id: { $ne: req.user._id },
+    _id: { $ne: req.user._id }, //All user except logged in user
   });
   res.status(200).json(users);
 });
