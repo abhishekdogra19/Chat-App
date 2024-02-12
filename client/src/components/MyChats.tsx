@@ -7,6 +7,7 @@ import { Button } from "./ui/button";
 import { PlusIcon } from "lucide-react";
 import ChatLoading from "./ChatLoading";
 import { getSender } from "./config/ChatLogic";
+import GroupChatModal from "./GroupChatModal";
 
 interface Userobj {
   _id: string;
@@ -56,9 +57,7 @@ const MyChats: React.FC = () => {
     >
       <div className="w-full justify-between flex items-center">
         <h1 className="font-semibold ">My Chats</h1>
-        <Button className="text-xs">
-          New Group Chat <PlusIcon />
-        </Button>
+        <GroupChatModal />
       </div>
       <div className="overflow-y-hidden flex flex-col p-3 bg-primary-foreground text-primary w-full h-full rounded-lg">
         {chats && loggedUser ? (
