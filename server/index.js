@@ -9,6 +9,7 @@ const connectDB = require("./db/connect");
 //routes
 const userRouter = require("./routes/User");
 const chatRouter = require("./routes/Chat");
+const messageRouter = require("./routes/Message");
 const cookieParser = require("cookie-parser");
 //env
 const PORT = process.env.PORT || 6000;
@@ -27,6 +28,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/user", userRouter);
 app.use("/api/chat", chatRouter);
+app.use("/api/message", messageRouter);
 
 app.use(notFound);
 app.use(errorHandler);
