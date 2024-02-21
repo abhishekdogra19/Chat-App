@@ -13,7 +13,8 @@ import { EyeIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 interface Userobj {
-  _id: string;
+  id?: string;
+  _id?: string;
   email: string;
   name: string;
   pic: string;
@@ -54,7 +55,9 @@ const Modal: React.FC<ModalProps> = ({ user, children }) => {
         </CredenzaBody>
         <CredenzaFooter>
           <CredenzaClose asChild>
-            <Button>Close</Button>
+            <Button className="bg-red-500 text-white font-semibold hover:bg-red-800">
+              Close
+            </Button>
           </CredenzaClose>
         </CredenzaFooter>
       </CredenzaContent>

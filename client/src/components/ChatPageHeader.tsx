@@ -25,7 +25,7 @@ const ChatPageHeader: React.FC = () => {
 
   const logoutHandler = async () => {
     try {
-      await axios.post("http://localhost:5000/api/user/logout");
+      await axios.post("/api/user/logout");
       toast({
         title: "Logout Successfully",
         description: "Please wait...",

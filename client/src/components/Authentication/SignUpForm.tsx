@@ -102,7 +102,7 @@ const SignUpForm: React.FC = () => {
     const { username, email, password } = values;
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/user",
+        "/api/user",
         {
           name: username,
           email,
@@ -120,9 +120,6 @@ const SignUpForm: React.FC = () => {
         title: "Success",
         description: "Please Wait...",
       });
-      setTimeout(() => {
-        navigate("/");
-      }, 1000);
     } catch (err) {
       const error = err as AxiosError<Error>;
       toast({

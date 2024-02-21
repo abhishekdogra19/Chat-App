@@ -19,6 +19,7 @@ interface chatObj {
   users: Userobj[];
   createdAt: string;
   updatedAt: string;
+  groupAdmin: Userobj;
 }
 
 interface ChatContextValue {
@@ -41,9 +42,7 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
     if (!user) {
       const fetchUser = async () => {
         try {
-          const response = await axios.get(
-            "http://localhost:5000/api/user/getUserProfile"
-          );
+          const response = await axios.get("/api/user/getUserProfile");
           setUser(response.data);
         } catch (error) {
           console.log("error");

@@ -6,8 +6,13 @@ interface Userobj {
   pic: string;
 }
 
-export const getSender = (loggedUser: Userobj, users: Userobj[]) => {
-  return loggedUser && users[0]._id === loggedUser.id
-    ? users[1].name
-    : users[0].name;
+export const getSender = (loggedUser: Userobj | null, users: Userobj[]) => {
+  if (!loggedUser) return;
+  const id = loggedUser._id;
+  return loggedUser && users[0]._id === id ? users[1].name : users[0].name;
+};
+export const getSenderFull = (loggedUser: Userobj | null, users: Userobj[]) => {
+  if (!loggedUser) return;
+  const id = loggedUser._id;
+  return loggedUser && users[0]._id === id ? users[1] : users[0];
 };

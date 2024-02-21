@@ -6,6 +6,7 @@ import { Toaster } from "./components/ui/toaster";
 import "./App.css";
 import axios from "axios";
 axios.defaults.withCredentials = true;
+axios.defaults.baseURL = "http://localhost:5000";
 const App: React.FC = () => {
   return (
     <div>

@@ -13,7 +13,7 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { useToast } from "./ui/use-toast";
 import { useChatContext } from "@/context/chatContextUtils";
-import { MdGroup, MdPersonAdd } from "react-icons/md";
+import { MdGroupAdd, MdPersonAdd } from "react-icons/md";
 import axios, { AxiosError } from "axios";
 import ChatLoading from "./ChatLoading";
 import SearchUserList from "./SearchUserList";
@@ -33,7 +33,7 @@ const GroupChatModal: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const { toast } = useToast();
   const [createGroupModalOpen, setCreateGroupModalOpen] = useState(false);
-  const { user, chats, setChats } = useChatContext();
+  const { chats, setChats } = useChatContext();
 
   const handleSearch = async (query: string) => {
     setSearch(query);
@@ -48,10 +48,7 @@ const GroupChatModal: React.FC = () => {
           Authorization: `Bearer ${token}`,
         },
       };
-      const response = await axios.get(
-        `http://localhost:5000/api/user?search=${search}`,
-        config
-      );
+      const response = await axios.get(`/api/user?search=${search}`, config);
       console.log(response.data);
       setSearchResult(response.data);
       setLoading(false);
@@ -97,7 +94,7 @@ const GroupChatModal: React.FC = () => {
         },
       };
       const { data } = await axios.post(
-        `http://localhost:5000/api/chat/group`,
+        `/api/chat/group`,
         {
           name: groupChatName,
           users: JSON.stringify(selectedUsers.map((user) => user._id)),
@@ -114,7 +111,7 @@ const GroupChatModal: React.FC = () => {
     } catch (err) {
       const error = err as AxiosError<Error>;
       toast({
-        title: "Error during searching user",
+        title: "Error during creating Group",
         description: error.response?.data.message,
         variant: "destructive",
       });
@@ -126,9 +123,10 @@ const GroupChatModal: React.FC = () => {
       onOpenChange={setCreateGroupModalOpen}
     >
       <CredenzaTrigger asChild>
-        <Button className="px-2 sm:px-10">
-          <span className="flex items-center p-0.5  gap-1 text-xs sm:text-lg">
-            New Group Chat <MdGroup className="font-bold size-5" />
+        <Button className="px-6 py-2 sm:px-3 font-semibold">
+          <span className="flex items-center gap-1 text-xs ">
+            Create Group
+            <MdGroupAdd className="font-bold size-5" />
           </span>
         </Button>
       </CredenzaTrigger>
@@ -148,7 +146,7 @@ const GroupChatModal: React.FC = () => {
             <span className="flex gap-1 w-full  items-center justify-between ">
               <Input
                 placeholder="Add Users: Abhi, Jane, John"
-                className="w-64  sm:w-96 "
+                className="w-56  sm:w-96 "
                 onChange={(e) => handleSearch(e.target.value)}
               />
               <Button className="flex gap-1 items-center justify-center w-[100%] ">
