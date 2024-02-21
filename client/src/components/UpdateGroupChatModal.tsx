@@ -248,8 +248,8 @@ const UpdateGroupChatModal: React.FC<UpdateGroupChatModalProps> = ({
             </div>
           ) : (
             <div
-              className={` overflow-x-hidden overflow-y-scroll ${
-                searchResult.length > 0 ? " h-auto mx-h-56 p-2 sm:px-6" : "h-0"
+              className={` overflow-x-hidden overflow-y-scroll  ${
+                searchResult.length > 0 ? " h-56 p-4 sm:px-6" : "h-0"
               } `}
             >
               {searchResult?.map((user) => {
