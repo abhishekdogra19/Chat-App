@@ -49,7 +49,6 @@ const GroupChatModal: React.FC = () => {
         },
       };
       const response = await axios.get(`/api/user?search=${search}`, config);
-      console.log(response.data);
       setSearchResult(response.data);
       setLoading(false);
     } catch (err) {

@@ -40,7 +40,6 @@ const UpdateGroupChatModal: React.FC<UpdateGroupChatModalProps> = ({
   const [renameloading, setRenameLoading] = useState(false);
   const { toast } = useToast();
   const { user, selectedChat, setSelectedChat } = useChatContext();
-  console.log("SelecedChat", selectedChat);
   const handleSearch = async (query: string) => {
     setSearch(query);
     if (!query) {
@@ -151,8 +150,6 @@ const UpdateGroupChatModal: React.FC<UpdateGroupChatModalProps> = ({
       });
       return;
     }
-    console.log(`${selectedChat.groupAdmin._id} !== ${user._id}`);
-    console.log("user ", user);
     if (selectedChat.groupAdmin._id !== user._id) {
       toast({
         title: "Only Admin can add someone!",
