@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "./ui/button";
 import { BsArrowLeft } from "react-icons/bs";
 import { getSender, getSenderFull } from "./config/ChatLogic";
@@ -11,6 +11,7 @@ import { FaSpinner } from "react-icons/fa";
 import axios, { AxiosError } from "axios";
 import { useToast } from "./ui/use-toast";
 import ChatScroll from "./ChatScroll";
+import io, { Socket } from "socket.io-client";
 
 interface Userobj {
   _id: string;
@@ -44,11 +45,17 @@ const SingleChat: React.FC<SingleChatProps> = ({
   fetchAgain,
   setFetchAgain,
 }) => {
+  const ENDPOINT = "http://localhost:5000";
+  const socket: Socket = useMemo(() => io(ENDPOINT), []);
   const [messages, setMessages] = useState<messageObj[]>([]);
   const [loading, setLoading] = useState(false);
   const [newMessage, setNewMessage] = useState("");
   const { user, selectedChat, setSelectedChat } = useChatContext();
   const { toast } = useToast();
+  const [socketConnected, setSocketConnected] = useState(false);
+  const selectedChatCompare = useRef<chatObj | null>(null);
+  const [typing, setTyping] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
   useEffect(() => {
     const fetchMessages = async () => {
       if (!selectedChat) return;
@@ -65,9 +72,9 @@ const SingleChat: React.FC<SingleChatProps> = ({
           `/api/message/${selectedChat?._id}`,
           config
         );
-        console.log(response.data);
         setMessages(response.data);
         setLoading(false);
+        socket.emit("join chat", selectedChat._id);
       } catch (err) {
         const error = err as AxiosError<Error>;
         toast({
@@ -78,11 +85,27 @@ const SingleChat: React.FC<SingleChatProps> = ({
       }
     };
     fetchMessages();
-  }, [selectedChat, toast, selectedChat?.users]);
+    selectedChatCompare.current = selectedChat;
+  }, [selectedChat, toast, selectedChat?.users, socket]);
+
+  useEffect(() => {
+    socket.on("message recieved", (newMessageRecieved) => {
+      if (
+        !selectedChatCompare.current?._id || // if chat is not selected or doesn't match current chat
+        selectedChatCompare.current._id !== newMessageRecieved.chat._id
+      ) {
+        // Notification
+      } else {
+        setMessages([...messages, newMessageRecieved]);
+      }
+    });
+  });
+  //Typing is left
+  // socket.on("typing", (room) => socket.in(room).emit("typing"));
+  // socket.on("stoptyping", (room) => socket.in(room).emit("stoptyping"));
 
   const sendMessage = async () => {
     if (newMessage) {
-      console.log("Sending message:", newMessage);
       // Add your logic to send the message
       try {
         setLoading(true);
@@ -102,8 +125,8 @@ const SingleChat: React.FC<SingleChatProps> = ({
           },
           config
         );
-        console.log(response.data);
         setMessages([...messages, response.data]);
+        socket.emit("newMessage", response.data);
         setLoading(false);
       } catch (err) {
         const error = err as AxiosError<Error>;
@@ -115,6 +138,12 @@ const SingleChat: React.FC<SingleChatProps> = ({
       }
     }
   };
+
+  useEffect(() => {
+    socket.emit("setup", user);
+    socket.on("connection", () => setSocketConnected(true));
+  }, [socket, user]);
+
   const handleKeyPress = (e: React.KeyboardEvent<HTMLElement>) => {
     if (e.key === "Enter" && newMessage) {
       sendMessage();
