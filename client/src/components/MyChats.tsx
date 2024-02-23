@@ -53,7 +53,7 @@ const MyChats: React.FC<MyChatsProps> = ({ fetchAgain }) => {
     <div
       className={` ${
         selectedChat ? " hidden" : "block"
-      } lg:block lg:w-1/3 w-full sm:p-4 overflow-hidden`}
+      } lg:block lg:w-1/4 w-full sm:p-4 overflow-hidden`}
     >
       <div className="w-full justify-between flex items-center">
         <h1 className="font-semibold text-base sm:text-base ">My Chats</h1>

@@ -225,7 +225,7 @@ const UpdateGroupChatModal: React.FC<UpdateGroupChatModalProps> = ({
             />
           </div>
 
-          <div className="flex text-xs sm:text:lg gap-1 p-2 mt-2">
+          <div className="flex flex-wrap justify-center text-xs sm:text:lg gap-1 p-2 mt-2">
             {renameloading ? (
               <Loader2 />
             ) : (

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { BsArrowLeft } from "react-icons/bs";
 import { getSender, getSenderFull } from "./config/ChatLogic";
@@ -10,6 +10,7 @@ import { useChatContext } from "@/context/chatContextUtils";
 import { FaSpinner } from "react-icons/fa";
 import axios, { AxiosError } from "axios";
 import { useToast } from "./ui/use-toast";
+import ChatScroll from "./ChatScroll";
 
 interface Userobj {
   _id: string;
@@ -46,7 +47,38 @@ const SingleChat: React.FC<SingleChatProps> = ({
   const [messages, setMessages] = useState<messageObj[]>([]);
   const [loading, setLoading] = useState(false);
   const [newMessage, setNewMessage] = useState("");
+  const { user, selectedChat, setSelectedChat } = useChatContext();
   const { toast } = useToast();
+  useEffect(() => {
+    const fetchMessages = async () => {
+      if (!selectedChat) return;
+      try {
+        setLoading(true);
+        const token = Cookies.get("token");
+        const config = {
+          headers: {
+            "Content-type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        };
+        const response = await axios.get(
+          `/api/message/${selectedChat?._id}`,
+          config
+        );
+        console.log(response.data);
+        setMessages(response.data);
+        setLoading(false);
+      } catch (err) {
+        const error = err as AxiosError<Error>;
+        toast({
+          title: "Error during fetching messages",
+          description: error.response?.data.message,
+          variant: "destructive",
+        });
+      }
+    };
+    fetchMessages();
+  }, [selectedChat, toast, selectedChat?.users]);
 
   const sendMessage = async () => {
     if (newMessage) {
@@ -92,7 +124,6 @@ const SingleChat: React.FC<SingleChatProps> = ({
     setNewMessage(e.target.value);
     // Tying indicator logic
   };
-  const { user, selectedChat, setSelectedChat } = useChatContext();
   return (
     <>
       {selectedChat ? (
@@ -131,10 +162,8 @@ const SingleChat: React.FC<SingleChatProps> = ({
                 <FaSpinner className="animate-spin size-8 lg:size-16 " />
               </div>
             ) : (
-              <div className="overflow-scroll px-4 lg:px-10 py-4">
-                {messages.map((message) => (
-                  <p key={message._id}>{message.content}</p>
-                ))}
+              <div className="overflow-y-scroll  px-4 lg:px-10 py-4 text-primary">
+                <ChatScroll messages={messages} />
               </div>
             )}
 

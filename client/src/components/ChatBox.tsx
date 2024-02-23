@@ -11,7 +11,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ fetchAgain, setFetchAgain }) => {
     <div
       className={`${
         selectedChat ? "flex" : "hidden"
-      } sm:flex lg:w-2/3 w-full border-secondary border `}
+      } sm:flex lg:w-3/4 w-full border-secondary border `}
     >
       <SingleChat fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
     </div>
