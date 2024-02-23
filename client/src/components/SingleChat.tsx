@@ -76,7 +76,7 @@ const SingleChat: React.FC<SingleChatProps> = ({
       } catch (err) {
         const error = err as AxiosError<Error>;
         toast({
-          title: "Error during searching user",
+          title: "Error during sending message",
           description: error.response?.data.message,
           variant: "destructive",
         });
