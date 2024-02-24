@@ -57,6 +57,8 @@ const start = async () => {
         socket.join(Room);
         console.log("Room joined ", Room);
       });
+      socket.on("typing", (room) => socket.in(room).emit("typing"));
+      socket.on("stopTyping", (room) => socket.in(room).emit("stopTyping"));
 
       socket.on("newMessage", (newMessageReceived) => {
         console.log("New Message received ", newMessageReceived);
