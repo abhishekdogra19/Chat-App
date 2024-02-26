@@ -48,18 +48,18 @@ const ChatPageHeader: React.FC = () => {
     <>
       <div className="bg-primary-foreground flex justify-between items-center w-full p-2">
         <SideSearchBar />
-        <div className="w-full text-center flex justify-center items-center gap-2">
+        <div className="w-full text-center flex justify-center items-center ">
           <BsChatSquareText className="text-xs sm:text-2xl" />
-          <span className="text-xs sm:text-xs lg:text-3xl px-2 font-bold uppercase">
+          <span className="text-xs sm:text-xs lg:text-3xl pl-1 font-bold uppercase">
             Spark Talk
           </span>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-1 sm:gap-4">
           <div className="flex items-center gap-2">
             <DropdownMenu>
               <DropdownMenuTrigger>
                 <FaBell
-                  className={`text-xl sm:text-xl cursor-pointer text-primary ${
+                  className={`text-xs sm:text-xl cursor-pointer text-primary ${
                     notification.length > 0 ? " animate-pulse " : ""
                   }`}
                 />
@@ -93,7 +93,6 @@ const ChatPageHeader: React.FC = () => {
               </DropdownMenuContent>
             </DropdownMenu>
             <DropdownMenu>
-              {" "}
               <DropdownMenuTrigger>
                 <Avatar className="border-4 border-primary size-8 sm:size-10">
                   <AvatarImage src={user?.pic} />
