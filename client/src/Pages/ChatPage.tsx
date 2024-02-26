@@ -18,10 +18,10 @@ const ChatPage: React.FC = () => {
     <div className="w-full overflow-hidden">
       {user && <ChatPageHeader />}
       <div className="flex justify-between w-full h-[90vh] p-2.5">
-        {user && <MyChats fetchAgain={fetchAgain} />}
         {user && (
           <ChatBox fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
         )}
+        {user && <MyChats fetchAgain={fetchAgain} />}
       </div>
     </div>
   );

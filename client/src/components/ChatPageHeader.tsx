@@ -17,9 +17,10 @@ import axios, { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "./ui/use-toast";
 import SideSearchBar from "./SideSearchBar";
-
+import { getSender } from "./config/ChatLogic";
 const ChatPageHeader: React.FC = () => {
-  const { user, setUser } = useChatContext();
+  const { user, setUser, notification, setNotification, setSelectedChat } =
+    useChatContext();
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -49,13 +50,48 @@ const ChatPageHeader: React.FC = () => {
         <SideSearchBar />
         <div className="w-full text-center flex justify-center items-center gap-2">
           <BsChatSquareText className="text-xs sm:text-2xl" />
-          <span className="text-xs sm:text-xl lg:text-3xl px-2 font-bold uppercase">
+          <span className="text-xs sm:text-xs lg:text-3xl px-2 font-bold uppercase">
             Spark Talk
           </span>
         </div>
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">
-            <FaBell className="text-xs sm:text-xl cursor-pointer text-primary" />
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <FaBell
+                  className={`text-xl sm:text-xl cursor-pointer text-primary ${
+                    notification.length > 0 ? " animate-pulse " : ""
+                  }`}
+                />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                {notification.length == 0 && "No New Messages"}
+                {notification &&
+                  notification.map((singleNotifi) => {
+                    return (
+                      <DropdownMenuItem
+                        onClick={() => {
+                          setSelectedChat(singleNotifi.chat);
+                          setNotification(
+                            notification.filter(
+                              (noti) => noti.chat !== singleNotifi.chat
+                            )
+                          );
+                        }}
+                        key={singleNotifi._id}
+                        className="w-full bg-primary text-black flex items-center justify-center mt-1 py-2 rounded-sm hover:brightness-90"
+                      >
+                        {singleNotifi.chat.isGroupChat
+                          ? `New Message in ${singleNotifi.chat.chatName}`
+                          : `New Message from ${getSender(
+                              user,
+                              singleNotifi.chat.users
+                            )}`}
+                      </DropdownMenuItem>
+                    );
+                  })}
+              </DropdownMenuContent>
+            </DropdownMenu>
             <DropdownMenu>
               {" "}
               <DropdownMenuTrigger>

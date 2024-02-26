@@ -21,6 +21,12 @@ interface chatObj {
   updatedAt: string;
   groupAdmin: Userobj;
 }
+interface notificationObj {
+  _id: string;
+  content: string;
+  chat: chatObj;
+  sender: Userobj;
+}
 
 interface ChatContextValue {
   user: Userobj | null;
@@ -30,6 +36,8 @@ interface ChatContextValue {
   setSelectedChat: (obj: chatObj | null) => void;
   chats: chatObj[];
   setChats: (obj: chatObj[]) => void;
+  notification: notificationObj[];
+  setNotification: (obj: notificationObj[]) => void;
 }
 export const ChatContext = createContext<ChatContextValue | null>(null);
 
@@ -38,6 +46,7 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
   const [ready, setReady] = useState<boolean>(false);
   const [selectedChat, setSelectedChat] = useState<chatObj | null>(null);
   const [chats, setChats] = useState<chatObj[]>([]);
+  const [notification, setNotification] = useState<notificationObj[]>([]);
   useEffect(() => {
     if (!user) {
       const fetchUser = async () => {
@@ -62,6 +71,8 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
         setSelectedChat,
         chats,
         setChats,
+        notification,
+        setNotification,
       }}
     >
       {children}

@@ -51,7 +51,8 @@ const SingleChat: React.FC<SingleChatProps> = ({
   const [messages, setMessages] = useState<messageObj[]>([]);
   const [loading, setLoading] = useState(false);
   const [newMessage, setNewMessage] = useState("");
-  const { user, selectedChat, setSelectedChat } = useChatContext();
+  const { user, selectedChat, setSelectedChat, notification, setNotification } =
+    useChatContext();
   const { toast } = useToast();
   const [socketConnected, setSocketConnected] = useState(false);
   const selectedChatCompare = useRef<chatObj | null>(null);
@@ -95,6 +96,10 @@ const SingleChat: React.FC<SingleChatProps> = ({
     };
     fetchMessages();
     selectedChatCompare.current = selectedChat;
+    return () => {
+      socket.off("message received");
+      socket.off("newMessage");
+    };
   }, [selectedChat, toast, selectedChat?.users, socket]);
 
   useEffect(() => {
@@ -104,6 +109,10 @@ const SingleChat: React.FC<SingleChatProps> = ({
         selectedChatCompare.current._id !== newMessageRecieved.chat._id
       ) {
         // Notification
+        if (!notification.includes(newMessageRecieved)) {
+          setNotification([newMessageRecieved, ...notification]);
+          setFetchAgain(!fetchAgain);
+        }
       } else {
         setMessages([...messages, newMessageRecieved]);
       }
@@ -152,6 +161,11 @@ const SingleChat: React.FC<SingleChatProps> = ({
     socket.on("connection", () => setSocketConnected(true));
     socket.on("typing", () => setIsTyping(true));
     socket.on("stopTyping", () => setIsTyping(false));
+    return () => {
+      socket.off("connection");
+      socket.off("typing");
+      socket.off("stopTyping");
+    };
   }, [socket, user]);
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLElement>) => {
@@ -192,8 +206,8 @@ const SingleChat: React.FC<SingleChatProps> = ({
               <BsArrowLeft className="font-bold" />
             </Button>
             {!selectedChat.isGroupChat ? (
-              <div className="flex  w-full items-center pl-2 ">
-                <h1 className="w-full capitalize text-center sm:text-left text-xl font-semibold">
+              <div className="flex  w-full items-center justify-between px-4 py-2 ">
+                <h1 className="w-full capitalize text-center  sm:text-left text-xl font-semibold">
                   {getSender(user, selectedChat.users)}
                 </h1>
                 <div>
@@ -201,8 +215,11 @@ const SingleChat: React.FC<SingleChatProps> = ({
                 </div>
               </div>
             ) : (
-              <div className="text-xl flex justify-between w-full px-2">
-                {selectedChat.chatName.toUpperCase()}
+              <div className=" flex justify-between items-center w-full px-4 py-2">
+                <h1 className="text-xl text-center font-semibold">
+                  {selectedChat.chatName.toUpperCase()}
+                </h1>
+
                 <UpdateGroupChatModal
                   fetchAgain={fetchAgain}
                   setFetchAgain={setFetchAgain}
@@ -217,9 +234,7 @@ const SingleChat: React.FC<SingleChatProps> = ({
                 <FaSpinner className="animate-spin size-8 lg:size-16 " />
               </div>
             ) : (
-              <div className="overflow-y-scroll  px-4 lg:px-10 py-4 text-primary">
-                <ChatScroll messages={messages} />
-              </div>
+              <ChatScroll messages={messages} />
             )}
 
             {/* Send Message */}
@@ -250,8 +265,9 @@ const SingleChat: React.FC<SingleChatProps> = ({
         </div>
       ) : (
         <div className="flex items-center justify-center w-full">
-          <p className="text-xl">
-            To read the message, please select any chat.
+          <p className="text-xs ">
+            To read the message,{" "}
+            <span className="font-semibold">please select any chat</span>.
           </p>
         </div>
       )}

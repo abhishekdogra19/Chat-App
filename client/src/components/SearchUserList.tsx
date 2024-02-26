@@ -22,14 +22,14 @@ const SearchUserList: React.FC<SearchUserListProps> = ({
       className="text-primary text-xs mt-2 sm:mt-3 rounded-xl bg-primary-foreground px-2 py-3 cursor-pointer h-20 sm:h-28 flex items-center gap-2 sm:gap-3 overflow-hidden hover:brightness-125"
       onClick={handleFunction}
     >
-      <Avatar className="border-4 border-primary size-14 sm:size-20">
+      <Avatar className="border-4 border-primary size-14 sm:size-16">
         <AvatarImage src={user?.pic} />
       </Avatar>
       <div>
-        <h1 className="ml-1 capitalize mb-2 font-semibold text-lg sm:text-2xl leading-5 ">
+        <h1 className="ml-1 capitalize mb-2 font-semibold text-xs sm:text-lg  leading-5 ">
           {user.name}
         </h1>
-        <p className="text-xs sm:text-lg">Email: {user.email}</p>
+        <p className="text-xs">Email: {user.email}</p>
       </div>
     </div>
   );

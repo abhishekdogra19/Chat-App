@@ -20,7 +20,7 @@ const HomePage: React.FC = () => {
       <div className="flex gap-1 items-center justify-center text-primary bg-primary-foreground py-2">
         <div className="w-full text-center flex justify-center items-center gap-2">
           <BsChatSquareText className="text-2xl" />
-          <span className="text-xl lg:text-3xl px-2 font-bold uppercase">
+          <span className="text-xs lg:text-3xl px-2 font-bold uppercase">
             Spark Talk
           </span>
         </div>
@@ -50,13 +50,13 @@ const HomePage: React.FC = () => {
             <TabsList className="flex justify-around  bg-primary-foreground border lg:border-0 border-primary border-t-0 -mt-1  py-2">
               <TabsTrigger
                 value="account"
-                className="text-xl duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground    w-2/4 p-1"
+                className="text-xs duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground    w-2/4 p-1"
               >
                 Login
               </TabsTrigger>
               <TabsTrigger
                 value="password"
-                className="text-xl duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground w-2/4 p-1 "
+                className="text-xs duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground w-2/4 p-1 "
               >
                 Sign Up
               </TabsTrigger>

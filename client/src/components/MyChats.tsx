@@ -52,7 +52,7 @@ const MyChats: React.FC<MyChatsProps> = ({ fetchAgain }) => {
   return (
     <div
       className={` ${
-        selectedChat ? " hidden" : "block"
+        selectedChat ? " hidden " : " block "
       } lg:block lg:w-1/4 w-full sm:p-4 overflow-hidden`}
     >
       <div className="w-full justify-between flex items-center">
@@ -65,7 +65,7 @@ const MyChats: React.FC<MyChatsProps> = ({ fetchAgain }) => {
             {chats.map((chat) => (
               <div
                 onClick={() => setSelectedChat(chat)}
-                className={`capitalize cursor-pointer mt-2 rounded-lg px-2 py-4 duration-300 ${
+                className={`capitalize text-xs cursor-pointer mt-2 rounded-lg px-2 py-4 duration-300 ${
                   selectedChat == chat ? " bg-blue-700 " : "bg-primary"
                 } ${
                   selectedChat == chat

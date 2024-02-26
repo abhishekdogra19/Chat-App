@@ -197,7 +197,7 @@ const UpdateGroupChatModal: React.FC<UpdateGroupChatModalProps> = ({
       </CredenzaTrigger>
       <CredenzaContent>
         <CredenzaHeader className="capitalize flex justify-center items-center my-1">
-          <CredenzaTitle className="border-b-4 w-full font-semibold text-center p-2 text-xl sm:text-2xl">
+          <CredenzaTitle className="border-b-4 w-full font-semibold text-center p-2 text-xs sm:text-2xl">
             Edit Group Chat
           </CredenzaTitle>
         </CredenzaHeader>
