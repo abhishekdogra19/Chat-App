@@ -202,7 +202,7 @@ const SingleChat: React.FC<SingleChatProps> = ({
         flex flex-col
         justify-between border-2 border-primary rounded-lg "
         >
-          <div className="flex items-baseline w-full bg-secondary rounded-t-lg ">
+          <div className="flex items-baseline w-full bg-secondary rounded-t-lg pl-2 ">
             <Button className="lg:hidden" onClick={() => setSelectedChat(null)}>
               <BsArrowLeft className="font-bold" />
             </Button>

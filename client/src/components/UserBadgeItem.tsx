@@ -16,10 +16,13 @@ const UserBadgeItem: React.FC<UserBadgeItemProps> = ({
   handleFunction,
 }) => {
   return (
-    <Badge variant="default" className="flex gap-1 px-2 py-1">
+    <Badge
+      variant="default"
+      className="flex gap-1 px-2 py-1 bg-popover-foreground text-popover"
+    >
       <span className="capitalize">{user.name}</span>
       <span
-        className="bg-primary-foreground cursor-pointer text-primary px-1  rounded-full"
+        className="bg-primary-foreground cursor-pointer text-popover   rounded-full"
         onClick={handleFunction}
       >
         x
