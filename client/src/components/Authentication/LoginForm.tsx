@@ -108,14 +108,18 @@ const LoginForm: React.FC = () => {
               </FormItem>
             )}
           />
-          <Button disabled={loading} type="submit" className="w-full">
+          <Button
+            disabled={loading}
+            type="submit"
+            className="w-full bg-secondary-foreground text-secondary hover:bg-white hover:brightness-75"
+          >
             {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Login"}
           </Button>
         </form>
       </Form>
       <Button
         variant={"secondary"}
-        className="w-full bg-red-700 hover:bg-red-800 mt-2 text-slate-50 font-semibold"
+        className="w-full bg-primary hover:brightness-105 mt-2 text-slate-50 font-semibold"
         onClick={() => {
           onSubmit({ email: "guest@gmail.com", password: "guest@123" });
         }}

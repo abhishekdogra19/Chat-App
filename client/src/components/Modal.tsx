@@ -29,7 +29,9 @@ const Modal: React.FC<ModalProps> = ({ user, children }) => {
   return (
     <Credenza>
       <CredenzaTrigger asChild>
-        <Button className="w-full">{children ? "Profile" : <EyeIcon />}</Button>
+        <Button className="w-full bg-popover text-popover-foreground">
+          {children ? "Profile" : <EyeIcon />}
+        </Button>
       </CredenzaTrigger>
       <CredenzaContent>
         <CredenzaHeader className="capitalize flex justify-center items-center my-1">

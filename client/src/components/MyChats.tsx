@@ -53,24 +53,24 @@ const MyChats: React.FC<MyChatsProps> = ({ fetchAgain }) => {
     <div
       className={` ${
         selectedChat ? " hidden " : " block "
-      } lg:block lg:w-1/4 w-full sm:p-4 overflow-hidden`}
+      } lg:block lg:w-1/4  w-full lg:px-8 lg:py-4  overflow-hidden bg-secondary rounded-lg p-1`}
     >
-      <div className="w-full justify-between flex items-center">
+      <div className="w-full justify-between flex items-center mb-1">
         <h1 className="font-semibold text-base sm:text-base ">My Chats</h1>
         <GroupChatModal />
       </div>
-      <div className="overflow-y-hidden flex flex-col p-3 bg-primary-foreground text-primary w-full h-full rounded-lg">
+      <div className="overflow-y-hidden flex flex-col p-6 bg-popover text-popover-foreground w-full h-[80vh]  rounded-lg  border-2 border-primary scrollbarHide">
         {chats && loggedUser ? (
-          <div className="overflow-y-scroll">
+          <div className="overflow-y-scroll p-2">
             {chats.map((chat) => (
               <div
                 onClick={() => setSelectedChat(chat)}
-                className={`capitalize text-xs cursor-pointer mt-2 rounded-lg px-2 py-4 duration-300 ${
-                  selectedChat == chat ? " bg-blue-700 " : "bg-primary"
+                className={`capitalize  text-base cursor-pointer mt-2 rounded-lg px-2 py-4 duration-300 ${
+                  selectedChat == chat ? " bg-primary " : "bg-secondary"
                 } ${
                   selectedChat == chat
-                    ? " text-white "
-                    : "text-primary-foreground"
+                    ? " text-white font-semibold "
+                    : "text-popover-foreground"
                 } `}
                 key={chat._id}
               >

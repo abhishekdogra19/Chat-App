@@ -16,9 +16,9 @@ const HomePage: React.FC = () => {
     }
   }, [navigate, user]);
   return (
-    <div className="min-h-screen   lg:p-2 bg-primary-foreground p-6 ">
-      <div className="flex gap-1 items-center justify-center text-primary bg-primary-foreground py-2">
-        <div className="w-full text-center flex justify-center items-center gap-2">
+    <div className="min-h-screen lg:p-2 bg-popover p-6 ">
+      <div className="flex gap-1 items-center justify-center text-primary bg-popover py-2">
+        <div className="w-full text-popover-foreground text-center flex justify-center items-center gap-2">
           <BsChatSquareText className="text-2xl" />
           <span className="text-xs lg:text-3xl px-2 font-bold uppercase">
             Spark Talk
@@ -29,8 +29,8 @@ const HomePage: React.FC = () => {
         </span>
       </div>
       <div className="lg:flex   lg:items-start justify-center lg:gap-2 ">
-        <div className=" border lg:border-0 p-2 border-primary w-full ">
-          <div className="h-60 sm:h-96 lg:h-full w-full overflow-hidden ">
+        <div className="p-2 w-full ">
+          <div className="h-60 sm:h-96 lg:h-full w-full overflow-hidden border-2 border-primary ">
             <div className="hidden lg:block lg:h-[87vh] overflow-hidden">
               <HomePageCarousel />
             </div>
@@ -45,18 +45,18 @@ const HomePage: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="text-primary mt-2 lg:w-full lg:mt-10">
+        <div className="text-popover-foreground mt-2 lg:w-full lg:mt-10">
           <Tabs defaultValue="account" className="w-full ">
-            <TabsList className="flex justify-around  bg-primary-foreground border lg:border-0 border-primary border-t-0 -mt-1  py-2">
+            <TabsList className="flex justify-around  bg-popover border lg:border-0 border-primary border-t-0 -mt-1  py-2 px-0">
               <TabsTrigger
                 value="account"
-                className="text-xs duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground    w-2/4 p-1"
+                className="text-lg font-semibold duration-300 data-[state=active]:bg-primary  data-[state=active]:text-primary-foreground w-2/4 p-2"
               >
                 Login
               </TabsTrigger>
               <TabsTrigger
                 value="password"
-                className="text-xs duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground w-2/4 p-1 "
+                className="text-lg font-semibold duration-300 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground w-2/4 p-2 "
               >
                 Sign Up
               </TabsTrigger>

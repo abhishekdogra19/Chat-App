@@ -19,10 +19,10 @@ const SearchUserList: React.FC<SearchUserListProps> = ({
 }) => {
   return (
     <div
-      className="text-primary text-xs mt-2 sm:mt-3 rounded-xl bg-primary-foreground px-2 py-3 cursor-pointer h-20 sm:h-28 flex items-center gap-2 sm:gap-3 overflow-hidden hover:brightness-125"
+      className="text-secondary-foreground text-xs mt-2 sm:mt-3 rounded-xl bg-secondary px-2 py-3 cursor-pointer h-20 sm:h-28 flex items-center gap-2 sm:gap-3 overflow-hidden hover:bg-secondary-foreground hover:text-secondary"
       onClick={handleFunction}
     >
-      <Avatar className="border-4 border-primary size-14 sm:size-16">
+      <Avatar className="border-4 border-secondary-foreground size-14 sm:size-16">
         <AvatarImage src={user?.pic} />
       </Avatar>
       <div>

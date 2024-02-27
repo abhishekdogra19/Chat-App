@@ -84,13 +84,13 @@ const SideSearchBar: React.FC = () => {
   };
   return (
     <Sheet open={openSidebar} onOpenChange={setOpenSiderbar}>
-      <SheetTrigger className="flex items-center justify-center bg-primary text-primary-foreground px-4 py-2 rounded-xl gap-1 ">
+      <SheetTrigger className="flex items-center justify-center bg-primary hover:brightness-75 text-primary-foreground px-4 py-2 rounded-xl gap-1 ">
         <MdPersonSearch />
         <span className="hidden sm:block whitespace-nowrap">Search User</span>
       </SheetTrigger>
 
       <SheetContent className="w-[300px] sm:w-[540px]" side={"left"}>
-        <SheetHeader className="border-b-2 border-primary">
+        <SheetHeader className="border-b-2 border-secondary-foreground">
           <SheetTitle>Search User</SheetTitle>
         </SheetHeader>
         <div className="grid grid-flow-col gap-1 py-4">
@@ -100,13 +100,16 @@ const SideSearchBar: React.FC = () => {
             placeholder="Enter Username "
             onChange={(e) => setSearch(e.target.value)}
           />
-          <Button className="flex gap-1 " onClick={handleSearch}>
+          <Button
+            className="flex gap-1 bg-secondary-foreground text-secondary hover:text-secondary-foreground "
+            onClick={handleSearch}
+          >
             <SearchIcon />
-            <span className="hidden sm:block">Go</span>
+            <span className="hidden sm:block ">Go</span>
           </Button>
         </div>
         {loading && <ChatLoading />}
-        <div className="overflow-scroll h-screen scrollba">
+        <div className="overflow-y-scroll h-[85vh]">
           {!loading &&
             (searchResult.length > 0 ? (
               searchResult.map((user) => (

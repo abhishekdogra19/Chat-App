@@ -12,6 +12,7 @@ import axios, { AxiosError } from "axios";
 import { useToast } from "./ui/use-toast";
 import ChatScroll from "./ChatScroll";
 import io, { Socket } from "socket.io-client";
+import { IoIosSend } from "react-icons/io";
 import Lootie from "react-lottie";
 import animationData from "../Animation/Animation - 1708781412524.json";
 interface Userobj {
@@ -199,9 +200,9 @@ const SingleChat: React.FC<SingleChatProps> = ({
         <div
           className="w-full
         flex flex-col
-        justify-between"
+        justify-between border-2 border-primary rounded-lg "
         >
-          <div className="flex items-baseline w-full bg-secondary ">
+          <div className="flex items-baseline w-full bg-secondary rounded-t-lg ">
             <Button className="lg:hidden" onClick={() => setSelectedChat(null)}>
               <BsArrowLeft className="font-bold" />
             </Button>
@@ -259,7 +260,9 @@ const SingleChat: React.FC<SingleChatProps> = ({
                   onKeyDown={handleKeyPress}
                 />
               </div>
-              <Button onClick={sendMessage}>Send</Button>
+              <Button onClick={sendMessage}>
+                <IoIosSend />
+              </Button>
             </div>
           </div>
         </div>

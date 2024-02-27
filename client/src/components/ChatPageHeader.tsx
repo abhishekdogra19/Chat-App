@@ -46,7 +46,7 @@ const ChatPageHeader: React.FC = () => {
   };
   return (
     <>
-      <div className="bg-primary-foreground flex justify-between items-center w-full p-2">
+      <div className="bg-popover flex justify-between items-center w-full p-2">
         <SideSearchBar />
         <div className="w-full text-center flex justify-center items-center ">
           <BsChatSquareText className="text-xs sm:text-2xl" />
@@ -59,7 +59,7 @@ const ChatPageHeader: React.FC = () => {
             <DropdownMenu>
               <DropdownMenuTrigger>
                 <FaBell
-                  className={`text-xs sm:text-xl cursor-pointer text-primary ${
+                  className={`text-xs sm:text-xl cursor-pointer text-popover-foreground ${
                     notification.length > 0 ? " animate-pulse " : ""
                   }`}
                 />
@@ -79,7 +79,7 @@ const ChatPageHeader: React.FC = () => {
                           );
                         }}
                         key={singleNotifi._id}
-                        className="w-full bg-primary text-black flex items-center justify-center mt-1 py-2 rounded-sm hover:brightness-90"
+                        className="w-full bg-popover text-black flex items-center justify-center mt-1 py-2 rounded-sm hover:brightness-90"
                       >
                         {singleNotifi.chat.isGroupChat
                           ? `New Message in ${singleNotifi.chat.chatName}`
@@ -94,7 +94,7 @@ const ChatPageHeader: React.FC = () => {
             </DropdownMenu>
             <DropdownMenu>
               <DropdownMenuTrigger>
-                <Avatar className="border-4 border-primary size-8 sm:size-10">
+                <Avatar className="border-4 border-popover-foreground size-8 sm:size-10">
                   <AvatarImage src={user?.pic} />
                   <AvatarFallback>{user?.name}</AvatarFallback>
                 </Avatar>
@@ -108,7 +108,7 @@ const ChatPageHeader: React.FC = () => {
                   </Modal>
                 )}
                 <DropdownMenuItem
-                  className="w-full bg-primary text-primary-foreground flex items-center justify-center mt-1 py-2 rounded-sm hover:brightness-90"
+                  className="w-full bg-popover text-popover-foreground flex items-center justify-center mt-1 py-2 rounded-sm hover:bg-primary active:bg-primary"
                   onClick={logoutHandler}
                 >
                   Logout

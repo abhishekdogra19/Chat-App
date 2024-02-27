@@ -32,15 +32,15 @@ const ChatScroll: React.FC<ChatScrollProps> = ({ messages }) => {
   const { user } = useChatContext();
   if (!user) return;
   return (
-    <ScrollableFeed className="px-2 py-4">
+    <ScrollableFeed className="px-2 py-4 ">
       {messages &&
         messages.map((m) => (
           <div className="flex" key={m._id}>
             <span
-              className={`text-xs max-w-[75%] px-4 py-2 rounded-2xl mt-2 ${
+              className={`text-xs max-w-[75%] min-w-[5%]  px-4 py-2 rounded-sm  mt-2 ${
                 user._id === m.sender._id
-                  ? "text-right bg-blue-950 text-white ml-auto "
-                  : "text-left bg-indigo-800 text-white"
+                  ? "text-right bg-primary text-white ml-auto "
+                  : "text-left bg-secondary text-secondary-foreground"
               }`}
               style={{ wordWrap: "break-word" }}
             >
