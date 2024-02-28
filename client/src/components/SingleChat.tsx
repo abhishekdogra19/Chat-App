@@ -252,7 +252,7 @@ const SingleChat: React.FC<SingleChatProps> = ({
             <div className="flex gap-1 p-1 ">
               <div className="w-full px-1 ">
                 <Input
-                  className="bg-input text-primary "
+                  className="bg-input text-popover-foreground "
                   placeholder="Enter a message..."
                   required={true}
                   onChange={typingHandler}
