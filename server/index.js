@@ -5,6 +5,7 @@ const cors = require("cors");
 const colors = require("colors");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 const { Server } = require("socket.io");
+const path = require("path");
 //db
 const connectDB = require("./db/connect");
 //routes
