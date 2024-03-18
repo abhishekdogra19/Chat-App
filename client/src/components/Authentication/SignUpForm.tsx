@@ -20,7 +20,6 @@ import { PasswordInput } from "../ui/PasswordInput";
 import { Label } from "../ui/label";
 import axios, { AxiosError } from "axios";
 import { Loader2 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 import { useChatContext } from "@/context/chatContextUtils";
 
 const formSchema = z
@@ -40,7 +39,6 @@ const SignUpForm: React.FC = () => {
   const { setUser } = useChatContext();
   const [pic, setPic] = useState<string>();
   const { toast } = useToast();
-  const navigate = useNavigate();
 
   const postImg = async (e: React.FormEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement & {
