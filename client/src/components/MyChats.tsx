@@ -52,14 +52,14 @@ const MyChats: React.FC<MyChatsProps> = ({ fetchAgain }) => {
   return (
     <div
       className={` ${
-        selectedChat ? " hidden " : " block "
-      } lg:block lg:w-1/4  w-full lg:px-8 lg:py-4  overflow-hidden bg-secondary rounded-lg p-1`}
+        selectedChat ? " hidden " : " flex  "
+      } lg:flex flex-col gap-2 lg:w-1/4  w-full p-4 lg:px-8 lg:py-4  overflow-hidden bg-secondary rounded-lg `}
     >
       <div className="w-full justify-between flex items-center mb-1">
         <h1 className="font-semibold text-base sm:text-base ">My Chats</h1>
         <GroupChatModal />
       </div>
-      <div className="overflow-y-hidden flex flex-col p-6 bg-popover text-popover-foreground w-full h-[80vh]  rounded-lg  border-2 border-primary scrollbarHide">
+      <div className="overflow-y-hidden flex flex-col p-6 bg-popover text-popover-foreground w-full h-full  rounded-lg  border-2 border-primary scrollbarHide">
         {chats && loggedUser ? (
           <div className="overflow-y-scroll p-2">
             {chats.map((chat) => (

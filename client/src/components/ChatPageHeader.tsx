@@ -50,7 +50,7 @@ const ChatPageHeader: React.FC = () => {
         <SideSearchBar />
         <div className="w-full text-center flex justify-center items-center ">
           <BsChatSquareText className="text-xs sm:text-2xl" />
-          <span className="text-xs sm:text-xs lg:text-3xl pl-1 font-bold uppercase">
+          <span className="text-xs sm:text-xs lg:text-xl pl-1 font-bold uppercase">
             Spark Talk
           </span>
         </div>
@@ -79,7 +79,7 @@ const ChatPageHeader: React.FC = () => {
                           );
                         }}
                         key={singleNotifi._id}
-                        className="w-full bg-popover text-black flex items-center justify-center mt-1 py-2 rounded-sm hover:brightness-90"
+                        className="w-full bg-popover text-popover-foreground flex items-center justify-center mt-1 py-2 rounded-sm hover:brightness-90"
                       >
                         {singleNotifi.chat.isGroupChat
                           ? `New Message in ${singleNotifi.chat.chatName}`
