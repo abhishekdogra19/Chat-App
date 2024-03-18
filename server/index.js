@@ -35,6 +35,13 @@ app.use("/api/user", userRouter);
 app.use("/api/chat", chatRouter);
 app.use("/api/message", messageRouter);
 
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/dist/index.html"), (err) => {
+    if (err) {
+      console.error("Error sending file:", err);
+    }
+  });
+});
 app.use(notFound);
 app.use(errorHandler);
 
