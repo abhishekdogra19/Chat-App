@@ -16,7 +16,12 @@ const cookieParser = require("cookie-parser");
 //env
 const PORT = process.env.PORT || 6000;
 
-app.use(cors());
+app.use(
+  cors({
+    credentials: true,
+    origin: "https://chat-app-zpvi.onrender.com",
+  })
+);
 // app.use(
 //   cors({
 //     credentials: true,
@@ -41,7 +46,7 @@ const start = async () => {
     });
     const io = new Server(server, {
       cors: {
-        origin: "http://localhost:5173",
+        origin: "https://chat-app-zpvi.onrender.com",
       },
       pingTimeout: 60000, //The amount of time it will wait while being inactive.
     });
