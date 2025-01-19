@@ -20,7 +20,11 @@ connectDB();
 
 app.use(express.json());
 app.use(cookieParser());
-const allowedOrigins = ["http://localhost:5173", "http://localhost:4000"];
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:4000",
+  "https://chat-app-xv6u.onrender.com",
+];
 
 const corsOptions = {
   origin: (origin, callback) => {
@@ -64,7 +68,7 @@ const start = async () => {
     });
     const io = new Server(server, {
       cors: {
-        origin: "https://chat-app-zpvi.onrender.com",
+        origin: "https://chat-app-xv6u.onrender.com",
       },
       pingTimeout: 60000, //The amount of time it will wait while being inactive.
     });

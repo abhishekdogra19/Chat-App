@@ -6,7 +6,7 @@ import { Toaster } from "./components/ui/toaster";
 import "./App.css";
 import axios from "axios";
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = "";
+axios.defaults.baseURL = "https://chat-app-xv6u.onrender.com";
 const App: React.FC = () => {
   return (
     <div>
