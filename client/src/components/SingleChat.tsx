@@ -47,7 +47,7 @@ const SingleChat: React.FC<SingleChatProps> = ({
   fetchAgain,
   setFetchAgain,
 }) => {
-  const ENDPOINT = "https://chat-app-zpvi.onrender.com";
+  const ENDPOINT = "https://chat-app-xv6u.onrender.com";
   const socket: Socket = useMemo(() => io(ENDPOINT), []);
   const [messages, setMessages] = useState<messageObj[]>([]);
   const [loading, setLoading] = useState(false);
