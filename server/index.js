@@ -20,11 +20,7 @@ connectDB();
 
 app.use(express.json());
 app.use(cookieParser());
-const allowedOrigins = [
-  "http://localhost:5173",
-  "http://localhost:4000",
-  "https://chat-app-zpvi.onrender.com",
-];
+const allowedOrigins = ["http://localhost:5173", "http://localhost:4000"];
 
 const corsOptions = {
   origin: (origin, callback) => {
